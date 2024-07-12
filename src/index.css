@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'Atkinson-Hyperlegible-Regular-102';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson-Hyperlegible-Regular-102';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson-Hyperlegible-Regular-102';
+  font-weight: 700;
+  font-style: bold;
+  src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson-Hyperlegible-Regular-102';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2');
+}
+
+* {
+  font-size: 14px;
+  font-family: 'Atkinson-Hyperlegible-Regular-102', sans-serif;
+}
+
+/* https://primer.style/foundations/primitives/color */
+.light {
+  background-color: white;
+  color: var(--fg-color-default);
+
+  --fg-color-default: #212121;
+  --fg-color-muted: #888;
+  --fg-color-disabled: #ccc;
+  --fg-color-accent: #0969da;
+
+  --bg-color-default: white;
+
+  --border-color-default: #d0d7de;
+  --border-color-disabled: #eaeef2b3;
+
+  --button-default-fg-color: white;
+  --button-default-bg-color: #212121;
+  --button-default-bg-color-hover: #313131;
+  --button-default-bg-color-disabled: #ccc;
+
+  --button-danger-fg-color: white;
+  --button-danger-bg-color: #dc143c;
+  --button-danger-bg-color-hover: #ff3d6b;
+  --button-danger-bg-color-disabled: #cf222e0d;
+
+  --control-bg-color-rest: #f6f8fa;
+  --control-bg-color-hover: #eef1f4;
+  --control-bg-color-active: #e7ebef;
+  --control-bg-color-disabled: #eaeef2b3;
+  --control-fgColor-rest: #212121;
+  --control-fgColor-placeholder: #69727c;
+  --control-fgColor-disabled: #8c959f;
+  --control-borderColor-danger: #dc143c;
+}
+
+.dark {
+  background-color: #212121;
+  color: var(--fg-color-default);
+
+  --fg-color-default: white;
+  --fg-color-muted: #888;
+  --fg-color-disabled: #ccc;
+  --fg-color-accent: #0969da;
+
+  --bg-color-default: #212121;
+
+  --border-color-default: #d0d7de;
+  --border-color-disabled: #eaeef2b3;
+
+  --button-default-fg-color: white;
+  --button-default-bg-color: #212121;
+  --button-default-bg-color-hover: #313131;
+  --button-default-bg-color-disabled: #ccc;
+
+  --button-danger-fg-color: white;
+  --button-danger-bg-color: #dc143c;
+  --button-danger-bg-color-hover: #ff3d6b;
+  --button-danger-bg-color-disabled: #cf222e0d;
+
+  --control-bg-color-rest: #f6f8fa;
+  --control-bg-color-hover: #eef1f4;
+  --control-bg-color-active: #e7ebef;
+  --control-bg-color-disabled: #eaeef2b3;
+  --control-fgColor-rest: #212121;
+  --control-fgColor-placeholder: #69727c;
+  --control-fgColor-disabled: #8c959f;
+  --control-borderColor-danger: #dc143c;
+}
+
