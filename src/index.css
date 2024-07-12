@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @font-face {
   font-family: 'Atkinson-Hyperlegible-Regular-102';
   font-weight: 400;
@@ -23,9 +26,33 @@
   src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2');
 }
 
-* {
+.cinzel-font {
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.montserrat-font {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
   font-size: 14px;
   font-family: 'Atkinson-Hyperlegible-Regular-102', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  /* height: 100%;c */
 }
 
 /* https://primer.style/foundations/primitives/color */
@@ -95,5 +122,24 @@
   --control-fgColor-placeholder: #69727c;
   --control-fgColor-disabled: #8c959f;
   --control-borderColor-danger: #dc143c;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.as-standard-btn {
+  background-color: var(--button-default-bg-color);
+  color: var(--button-default-fg-color);
+}
+
+.as-standard-btn:hover {
+  background-color: var(--button-default-bg-color-hover);
 }
 

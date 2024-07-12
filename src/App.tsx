@@ -3,7 +3,7 @@ import './App.css'
 import Home from './pages/Home';
 import { ThemeService } from './services/themeService';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './components/AuthProvider';
 import Char from './pages/Char';
