@@ -17,6 +17,7 @@
     text-align: center;
     font-weight: 700;
     margin-bottom: 0;
+    color: whitesmoke;
 }
 
 .app-title span {
@@ -30,4 +31,16 @@
     text-transform: uppercase;
     letter-spacing: 1rem;
     margin: -14px 0 0 0;
+    color: whitesmoke;
+}
+
+.app-caption {
+    color: whitesmoke;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .app-caption {
+        padding: 0 16px;
+    }  
 }
