@@ -169,14 +169,17 @@ button {
 }
 
 .as-clear-btn div {
-  /* position: relative;
-  z-index: 2; */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   gap: 8px;
-  /* backdrop-filter: blur(30px) saturate(2.5); */
-  /* background-color: transparent; */
 }
 
+.as-mini-btn {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}

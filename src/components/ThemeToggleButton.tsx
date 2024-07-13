@@ -1,15 +1,18 @@
-export default function ThemeToggleButton() {
-    return (
-        <button onClick={handleClick}>Toggle Theme</button>
-    )
-}
+import { HalfMoon, SunLight } from "iconoir-react";
+import { useState } from "react";
 
-function handleClick() {
-    if (document.body.classList.contains('dark')) {
-        document.body.classList.remove('dark');
-        document.body.classList.add('light');
-    } else {
-        document.body.classList.remove('light');
-        document.body.classList.add('dark');
-    }
+export default function ThemeToggleButton() {
+    const [isDarkTheme, setIsDarkTheme] = useState(document.body.classList.contains('dark'));
+
+    const handleClick = () => {
+        setIsDarkTheme(!isDarkTheme);
+        document.body.classList.toggle('dark');
+        document.body.classList.toggle('light');
+    };
+
+    return (
+        <button style={{'width': 'min-content'}} className="as-clear-btn as-mini-btn" onClick={handleClick}>
+            {isDarkTheme ? <SunLight /> : <HalfMoon />}
+        </button>
+    )
 }
