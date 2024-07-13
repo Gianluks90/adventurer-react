@@ -5,18 +5,19 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './components/AuthProvider';
-import Char from './pages/Char';
 import Home from './pages/Home/Home';
+import CharactersList from './pages/CharactersList/CharactersList';
 
 export default function App() {
 
   useEffect(() => {
     ThemeService.getUserThemePreference();
   }, []);
+
   const [backgroundUrl, setBackgroundUrl] = useState<string>('/backgrounds/summer.jpg');
 
   return (
-    <div className="login-container" style={{ background: `url(${backgroundUrl})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
+    <div className="main-container" style={{ background: `url(${backgroundUrl})`, backgroundPosition: 'center', backgroundSize: 'cover'}}>
       <BrowserRouter>
         <AuthProvider>
           <Routes>
@@ -26,9 +27,9 @@ export default function App() {
                 <Home />
               </ProtectedRoute>
             } />
-            <Route path="/chars" element={
+            <Route path="/characters" element={
               <ProtectedRoute>
-                <Char />
+                <CharactersList />
               </ProtectedRoute>
             } />
             <Route path="/" element={

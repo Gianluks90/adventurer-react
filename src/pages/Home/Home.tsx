@@ -2,10 +2,12 @@ import { useAuth } from "../../components/AuthProvider";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
 import { Box, Group, LogOut, Map, Page } from "iconoir-react";
 import './home.css';
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     // const { user, setUser } = useAuth();
     const { logout } = useAuth();
+    const navigate = useNavigate();
 
     return (
         <>
@@ -14,7 +16,7 @@ export default function Home() {
                 <h2 className="montserrat-font app-subtitle">studio</h2>
                 <h3 className="montserrat-font app-caption">Crea i tuoi personaggi per il gioco di ruolo più famoso del mondo!</h3>
                 <div className="buttons-container">
-                    <div className="as-clear-btn">
+                    <div className="as-clear-btn" onClick={() => navigate('/characters')}>
                         <div>
                             <Page /> Personaggi
                         </div>
@@ -36,7 +38,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="version-label">
-                    Ver. 0.13072024
+                    Ver. 0.14072024
                 </div>
             </div>
 

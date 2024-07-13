@@ -41,6 +41,20 @@
 .version-label {
     margin: 16px;
     padding: 8px 16px;
-    background: var(--bg-color-default);
-    border-radius: 12px;
+    font-size: small;
+    opacity: 0.4;
+}
+
+.version-label:hover {
+    animation: opacityFadeIn 0.5s forwards;
+    cursor: default;
+}
+
+@keyframes opacityFadeIn {
+    0% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
 }

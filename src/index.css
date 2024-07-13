@@ -124,6 +124,14 @@ html, body {
   --control-borderColor-danger: #dc143c;
 }
 
+.blurred-light {
+  background-color: rgba(var(--bg-color-default), 0);
+}
+
+.blurred-dark {
+  background-color: rgba(var(--bg-color-default), 0.3);
+}
+
 button {
   border: none;
   border-radius: 8px;
@@ -148,10 +156,10 @@ button {
   padding: 8px 16px;
   box-sizing: border-box;
   border-radius: 24px;
-  -webkit-backdrop-filter: blur(30px) saturate(2.5);
-  backdrop-filter: blur(30px) saturate(2.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  backdrop-filter: blur(30px) saturate(1.5);
   border: 1px solid hsla(0, 0%, 100%, 0);
-  color: white;
+  color: var(--fg-color-default);
 }
 
 .as-clear-btn:hover {
@@ -164,7 +172,7 @@ button {
     border-color: hsla(0, 0%, 100%, 0);
   }
   100% {
-    border-color: hsla(0, 0%, 100%, .2);
+    border-color: hsla(0, 0%, 100%, .5);
   }
 }
 
