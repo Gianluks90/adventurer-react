@@ -1,7 +1,7 @@
 import { useAuth } from "../../components/AuthProvider";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
 import { Box, Group, LogOut, Map, Page } from "iconoir-react";
-import './home.css';
+import './home.scss';
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -38,7 +38,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="version-label">
-                    Ver. 0.14072024
+                    Ver. 0.15072024
                 </div>
             </div>
 

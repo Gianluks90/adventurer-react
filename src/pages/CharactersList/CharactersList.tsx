@@ -5,8 +5,10 @@ export default function CharactersList() {
     const navigate = useNavigate();
     return (
         <>
-            <div>
-                <h1>Char</h1>
+            <div className="backdrop-container">
+                <div>
+                    <h1>Char</h1>
+                </div>
             </div>
             <div className="as-clear-btn as-mini-btn left-button" onClick={() => navigate('/home')}>
                 <Home />

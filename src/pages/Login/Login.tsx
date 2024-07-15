@@ -1,6 +1,6 @@
 import { useAuth } from "../../components/AuthProvider";
 import { Google } from "iconoir-react";
-import "./login.css";
+import "./login.scss";
 
 export default function Login() {
   const { login } = useAuth();
