@@ -5,7 +5,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
 }
 
 .buttons-container {

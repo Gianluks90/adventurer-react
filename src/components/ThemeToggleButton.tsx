@@ -1,5 +1,5 @@
 import { HalfMoon, SunLight } from "iconoir-react";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "../providers/ThemeProvider";
 
 export default function ThemeToggleButton() {
     // const [isDarkTheme, setIsDarkTheme] = useState(document.body.classList.contains('dark'));

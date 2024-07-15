@@ -1,4 +1,4 @@
-import { useAuth } from "../../components/AuthProvider";
+import { useAuth } from "../../providers/AuthProvider";
 import { Google } from "iconoir-react";
 import "./login.scss";
 

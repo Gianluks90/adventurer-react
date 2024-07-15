@@ -29,13 +29,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = firebaseService.auth.onAuthStateChanged((user: User) => {
-      checkUserExists(user).then(advUser => {
-        if (advUser) {
-          const adventuerUser = AdventurerUser.fromData(user.uid, advUser);
-          setUser(adventuerUser);
-          setLoading(false);
-        }
-      })
+      if (user) {
+        checkUserExists(user).then(advUser => {
+          if (advUser) {
+            const adventuerUser = AdventurerUser.fromData(user.uid, advUser);
+            setUser(adventuerUser);
+            setLoading(false);
+          }
+        })
+      }
     });
     return unsubscribe;
   }, []);

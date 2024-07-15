@@ -3,8 +3,8 @@ import './App.scss'
 import { ThemeService } from './services/themeService';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { AuthProvider } from './components/AuthProvider';
-import { useTheme } from './components/ThemeProvider';
+import { AuthProvider } from './providers/AuthProvider';
+import { useTheme } from './providers/ThemeProvider';
 
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
