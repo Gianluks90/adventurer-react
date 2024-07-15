@@ -19,3 +19,16 @@
 
     box-sizing: border-box;
 }
+
+.overaly-animation {
+    animation: turnDark 0.5s forwards;
+}
+
+@keyframes turnDark {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

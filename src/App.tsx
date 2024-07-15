@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <div className="main-container" style={{ background: `url(${backgroundUrl})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
-      <div className='overlay' style={{ backgroundColor: `rgba(0, 0, 0, ${isDarkTheme ? '.4' : '0'}`}}>
+      <div className={`overlay ${isDarkTheme ? 'overaly-animation' : ''}`} style={{ backgroundColor: `rgba(0, 0, 0, ${isDarkTheme ? '.4' : '0'}`}}>
         <BrowserRouter>
           <AuthProvider>
             <Routes>

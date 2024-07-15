@@ -21,14 +21,22 @@
 }
 
 .as-clear-btn {
-    width: 200px;
+    width: 200px !important;
 }
 
-.left-button {
+.bottom-left-container {
     position: absolute;
     left: 16px;
     bottom: 16px;
-    width: min-content;
+    display: flex;
+    gap: 12px;
+
+    &>div {
+        width: min-content;
+    }
+    &>a {
+        width: min-content;
+    }
 }
 
 .right-button {

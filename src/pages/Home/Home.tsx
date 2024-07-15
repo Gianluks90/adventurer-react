@@ -1,12 +1,13 @@
 import { useAuth } from "../../components/AuthProvider";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
-import { Box, Group, LogOut, Map, Page } from "iconoir-react";
-import './home.scss';
+import { Box, FireFlame, Group, LogOut, Map, Page } from "iconoir-react";
 import { useNavigate } from "react-router-dom";
+import './home.scss';
+import { ROLE } from "../../models/AdventurerUser";
 
 export default function Home() {
     // const { user, setUser } = useAuth();
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -16,23 +17,23 @@ export default function Home() {
                 <h2 className="montserrat-font app-subtitle">studio</h2>
                 <h3 className="montserrat-font app-caption">Crea i tuoi personaggi per il gioco di ruolo più famoso del mondo!</h3>
                 <div className="buttons-container">
-                    <div className="as-clear-btn" onClick={() => navigate('/characters')}>
-                        <div>
+                    <div className="as-glass-effect" onClick={() => navigate('/characters')}>
+                        <div className="as-clear-btn">
                             <Page /> Personaggi
                         </div>
                     </div>
-                    <div className="as-clear-btn">
-                        <div>
+                    <div className="as-glass-effect">
+                        <div className="as-clear-btn">
                             <Box /> Risorse
                         </div>
                     </div>
-                    <div className="as-clear-btn">
-                        <div>
+                    <div className="as-glass-effect">
+                        <div className="as-clear-btn">
                             <Group /> Campagne
                         </div>
                     </div>
-                    <div className="as-clear-btn">
-                        <div>
+                    <div className="as-glass-effect">
+                        <div className="as-clear-btn">
                             <Map /> Avventure
                         </div>
                     </div>
@@ -42,9 +43,17 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="as-clear-btn as-mini-btn left-button" onClick={logout}>
-                <LogOut />
+            <div className="bottom-left-container">
+                <div className="as-glass-effect as-mini-btn" onClick={logout}>
+                    <LogOut />
+                </div>
+                {user && user.role === ROLE.ADMIN ?
+                    <a className="as-glass-effect as-mini-btn" href="https://console.firebase.google.com/u/1/project/dnd-character-sheet-2023/overview" target="_blank">
+                        <FireFlame />
+                    </a> : ''
+                }
             </div>
+
             <div className="right-button">
                 <ThemeToggleButton />
             </div>

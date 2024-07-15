@@ -16,7 +16,7 @@ export default function ThemeToggleButton() {
     // };
 
     return (
-        <button style={{'width': 'min-content'}} id="toggle-theme-btn" className="as-clear-btn as-mini-btn" onClick={toggleTheme}>
+        <button style={{'width': 'min-content'}} id="toggle-theme-btn" className="as-glass-effect as-mini-btn" onClick={toggleTheme}>
             {isDarkTheme ? <HalfMoon /> : <SunLight />}
         </button>
     )

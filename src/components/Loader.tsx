@@ -8,6 +8,10 @@ export default function Loader() {
                 {`
                 .loader {
                     animation: spin 1s linear infinite;
+                    transform-origin: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 @keyframes spin {
