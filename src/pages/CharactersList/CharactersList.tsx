@@ -6,11 +6,13 @@ import { useAuth } from "../../providers/AuthProvider";
 import './charactersList.scss';
 import { Character } from "../../models/Character";
 import CharacterCard from "../../components/characterCard/CharacterCard";
+import NewCharacterDialog from "../../components/dialogs_charListPage/newCharacterDialog/NewCharacterDialog";
 
 export default function CharactersList() {
     const navigate = useNavigate();
-    const [characters, setCharacters] = useState<Character[]>([]);
     const { user } = useAuth();
+    const [characters, setCharacters] = useState<Character[]>([]);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     useEffect(() => {
         if (!user) return;
@@ -38,9 +40,11 @@ export default function CharactersList() {
                 </div>
             </div>
 
-            <div className="as-glass-effect as-mini-btn right-button">
+            <div className="as-glass-effect as-mini-btn right-button" onClick={() => setIsDialogOpen(true)}>
                 <Plus />
             </div>
+
+            <NewCharacterDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
         </>
     )
 }

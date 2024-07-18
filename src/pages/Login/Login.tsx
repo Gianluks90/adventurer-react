@@ -1,6 +1,7 @@
 import { useAuth } from "../../providers/AuthProvider";
 import { Google } from "iconoir-react";
 import "./login.scss";
+import ThemeToggleButton from "../../components/ThemeToggleButton";
 
 export default function Login() {
   const { login } = useAuth();
@@ -14,6 +15,9 @@ export default function Login() {
         <div className="as-clear-btn">
           <Google /> Accedi con Google
         </div>
+      </div>
+      <div className="right-button">
+        <ThemeToggleButton />
       </div>
     </>
   );
