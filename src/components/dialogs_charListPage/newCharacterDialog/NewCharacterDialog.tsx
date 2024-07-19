@@ -1,10 +1,9 @@
 import './newCharacterDialog.scss';
-import React, { useEffect, useRef } from 'react';
 import { Check, WarningCircle, Xmark } from 'iconoir-react';
 import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
 interface NewCharacterDialogProps {
-    isOpen: boolean;
     onClose: () => void;
 }
 
@@ -12,21 +11,15 @@ interface FormData {
     name: string;
 }
 
-const NewCharacterDialog: React.FC<NewCharacterDialogProps> = ({ isOpen, onClose }) => {
-    const dialogRef = useRef<HTMLDialogElement>(null);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
-
-    useEffect(() => {
-        const dialog = dialogRef.current;
-        if (dialog) {
-            if (isOpen) {
-                dialog.showModal();
-                reset();
-            } else {
-                dialog.close();
-            }
+const NewCharacterDialog: React.FC<NewCharacterDialogProps> = ({ onClose }) => {
+    const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormData>({
+        delayError: 1000,
+        criteriaMode: 'all',
+        mode: 'onChange',
+        defaultValues: {
+            name: ''
         }
-    }, [isOpen, reset]);
+    });
 
     const onSubmit = (data: FormData) => {
         console.log('Nuovo personaggio:', data.name);
@@ -34,37 +27,50 @@ const NewCharacterDialog: React.FC<NewCharacterDialogProps> = ({ isOpen, onClose
         onClose();
     };
 
+    const handleClose = () => {
+        reset();
+        onClose();
+    }
+
     return (
-        <dialog ref={dialogRef} className="as-dialog">
+        <>
+          <button type="button" className='as-dialog-close-btn only-light-mode' onClick={handleClose}>
+                <Xmark />
+            </button>
             <div className='as-dialog-header'>
                 <h2>Nuovo personaggio</h2>
             </div>
             <div className='as-dialog-content'>
-                <p>Inserisci il nome del Personaggio (massimo 20 caratteri), confermando la scelta la pagina verrà ricaricata. Se non ti bastano i caratteri sappi che più avanti potrai inserire un nome esteso per il tuo personaggio.</p>
+                <p>Inserisci il nome del Personaggio (massimo 20 caratteri). Se non ti bastano i caratteri potrai inserire un nome esteso per il tuo personaggio.</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='as-form-field'>
-                        {/* <label htmlFor="name">Nome</label> */}
                         <input
                             id="name"
                             type="text"
-                            placeholder='Nome personaggio'
-                            minLength={3}
-                            maxLength={20}
-                            {...register('name', { required: 'Campo obbligatorio' })}
+                            placeholder='Nome personaggio*'
+                            style={errors.name ? { borderColor: 'var(--fg-color-error)' } : {}}
+                            {...register('name', { required: 'Campo obbligatorio', minLength: { value: 3, message: 'Minimo 3 caratteri' }, maxLength: { value: 20, message: 'Massimo 20 caratteri' } })}
+                        // onBlur={() => {}}
                         />
-                        {errors.name && <p className="as-error-message"><WarningCircle /> {errors.name.message}</p>}
+                        <ErrorMessage errors={errors} name='name' render={({ messages }) =>
+                            messages &&
+                            Object.entries(messages).map(([type, message]) => (
+                                <p key={type} className="as-error-message"><WarningCircle />{message}</p>
+                            ))
+                        } />
                     </div>
                     <div className='as-dialog-footer'>
-                        <button type="button" className='as-mini-icon-btn' onClick={onClose}>
+                        {/* <button type="button" className='as-mini-icon-btn only-light-mode' onClick={handleClose}>
                             <Xmark />
-                        </button>
-                        <button type="submit" className='as-mini-icon-btn'>
+                        </button> */}
+                        <button type="submit" className='as-mini-icon-btn only-light-mode' disabled={!isValid}>
                             <Check />
                         </button>
                     </div>
                 </form>
+          
             </div>
-        </dialog>
+        </>
     );
 }
 

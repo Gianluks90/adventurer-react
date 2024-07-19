@@ -1,5 +1,5 @@
 import { Home, Plus } from "iconoir-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCharactersByUserId } from "../../services/characterService";
 import { useAuth } from "../../providers/AuthProvider";
@@ -12,7 +12,6 @@ export default function CharactersList() {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [characters, setCharacters] = useState<Character[]>([]);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     useEffect(() => {
         if (!user) return;
@@ -25,6 +24,11 @@ export default function CharactersList() {
     //     console.log(characters);
     // }, [characters])
 
+    const closeDialog = () => {
+        dialogRef.current?.close();
+    }
+
+    const dialogRef = useRef<HTMLDialogElement>(null);
     return (
         <>
             <div className="backdrop-container">
@@ -40,11 +44,12 @@ export default function CharactersList() {
                 </div>
             </div>
 
-            <div className="as-glass-effect as-mini-btn right-button" onClick={() => setIsDialogOpen(true)}>
+            <div className="as-glass-effect as-mini-btn right-button" onClick={() => dialogRef.current?.showModal()}>
                 <Plus />
             </div>
-
-            <NewCharacterDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
+            <dialog ref={dialogRef} className="as-dialog">
+                <NewCharacterDialog onClose={closeDialog}/>
+            </dialog>
         </>
     )
 }

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.scss'
-import { ThemeService } from './services/themeService';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './providers/AuthProvider';
@@ -11,11 +10,6 @@ import Home from './pages/Home/Home';
 import CharactersList from './pages/CharactersList/CharactersList';
 
 export default function App() {
-
-  useEffect(() => {
-    ThemeService.getUserThemePreference();
-  }, []);
-
   const [backgroundUrl, setBackgroundUrl] = useState<string>('/backgrounds/summer.jpg');
   const { isDarkTheme } = useTheme();
 

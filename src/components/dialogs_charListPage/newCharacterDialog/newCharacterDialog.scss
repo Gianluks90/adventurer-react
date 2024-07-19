@@ -38,35 +38,3 @@
         }
     }
 }
-
-.close-button {
-    color: var(--fg-color-default);
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background: none;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    width: 30px;
-    padding: 0;
-
-    &:hover {
-        cursor: pointer;
-        animation: fadeInBorder 0.5s forwards;
-    }
-
-    @keyframes fadeInBorder {
-        0% {
-            border-color: rgba(var(--fg-color-muted), 0.2);
-        }
-
-        100% {
-            border-color: rgba(var(--fg-color-muted), 0.6);
-            background-color: rgba(var(--border-color-default), .1);
-        }
-
-    }
-}

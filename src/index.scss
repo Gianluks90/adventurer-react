@@ -7,18 +7,21 @@
   font-style: normal;
   src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2');
 }
+
 @font-face {
   font-family: 'Atkinson-Hyperlegible-Regular-102';
   font-weight: 400;
   font-style: italic;
   src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2');
 }
+
 @font-face {
   font-family: 'Atkinson-Hyperlegible-Regular-102';
   font-weight: 700;
   font-style: bold;
   src: url('/fonts/Atkinson-Hyperlegible/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2');
 }
+
 @font-face {
   font-family: 'Atkinson-Hyperlegible-Regular-102';
   font-weight: 700;
@@ -41,17 +44,16 @@
 }
 
 :root {
-  font-size: 14px !important;
+  // font-size: 14px !important;
   font-family: 'Atkinson-Hyperlegible-Regular-102', sans-serif;
-  --fg-color-accent: #0969da;
-
 }
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   /* height: 100%;c */
@@ -152,6 +154,15 @@ button {
   &:focus {
     outline: none;
   }
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 
 .as-standard-btn {
@@ -167,6 +178,7 @@ button {
     0% {
       background-color: var(--button-bg-color);
     }
+
     100% {
       background-color: var(--button-bg-color-hover);
     }
@@ -193,6 +205,7 @@ button {
   0% {
     border-color: hsla(0, 0%, 100%, .2);
   }
+
   100% {
     border-color: hsla(0, 0%, 100%, .6);
     background-color: rgba(white, .1);
@@ -228,10 +241,11 @@ button {
   border: none;
   width: 32px;
   height: 32px;
+}
 
-  &:hover {
-    opacity: 0.8;
-  }
+.only-light-mode {
+  background-color: white;
+  color: #212121;
 }
 
 // DIALOG
@@ -254,10 +268,12 @@ button {
       opacity: 0;
       transform: scale(.8);
     }
+
     50% {
       opacity: 1;
       transform: scale(1.03);
     }
+
     100% {
       transform: scale(1);
     }
@@ -270,42 +286,54 @@ button {
     animation: fadeInBackdrop 0.3s forwards;
 
     @keyframes fadeInBackdrop {
-        0% {
-            opacity: 0;
-        }
+      0% {
+        opacity: 0;
+      }
 
-        100% {
-            opacity: 1;
-        }
-        
+      100% {
+        opacity: 1;
+      }
+
     }
-}
+  }
 
-  &>button.as-dialog-close-btn {
+  // &>button.as-dialog-close-btn {
+  //   color: var(--fg-color-default);
+  //   position: absolute;
+  //   top: 8px;
+  //   right: 8px;
+  //   background: none;
+  //   border: none;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   font-size: 1.1rem;
+  //   padding: 0;
+
+  //   &:focus {
+  //     outline: none;
+  //   }
+
+  //   &:hover {
+  //     cursor: pointer;
+  //     opacity: .8;
+  //   }
+  // }
+
+  &>.as-dialog-close-btn {
     color: var(--fg-color-default);
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 4px;
+    right: 4px;
+    color: white;
     background: none;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.1rem;
-    padding: 0;
-
-    &:focus {
-      outline: none;
-    }
-
-    &:hover {
-        cursor: pointer;
-        opacity: .8;
-    }
+    font-size: 1rem;
   }
 
   .as-dialog-header {
     padding: 16px 16px 0 16px;
+
     &>h2 {
       text-transform: uppercase;
       margin: 0;
@@ -335,6 +363,7 @@ button {
     align-items: center;
     justify-content: flex-end;
     gap: 8px;
+    margin-top: 4px;
   }
 }
 
@@ -344,6 +373,17 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
+  animation: errorFadeIn 0.5s ease-in-out forwards;
+
+  @keyframes errorFadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 }
 
 .as-form-field {
@@ -354,28 +394,29 @@ button {
     margin-bottom: 4px;
     font-weight: 600;
   }
-  
+
   &>input[type="text"] {
-  
+
     width: 100%;
     padding: 12px;
     border-radius: 8px;
     border: 1px solid var(--fg-color-muted);
     background-color: var(--control-bg-color-rest);
     color: white;
-  
+
     &:hover {
       background-color: var(--control-bg-color-hover);
     }
+
     &:disabled {
       background-color: var(--control-bg-color-disabled);
       color: var(--control-fg-color-disabled);
     }
+
     &:focus {
       outline: none;
       background-color: var(--control-bg-color-active);
       border-color: var(--fg-color-default);
     }
-}
-
+  }
 }
