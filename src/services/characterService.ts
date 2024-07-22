@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, onSnapshot, query, where } from "firebase/firestore";
 import firebaseService from "./firebaseService";
 import { Character } from "../models/Character";
 
@@ -9,7 +9,13 @@ export async function getCharactersByUserId(userId: string): Promise<Character[]
     querySnapshot.forEach(doc => {
         result.push(Character.fromDataOld(doc.data()));
     });
-    console.log(result);
-    
     return result;
+}
+
+export async function getCharacterByIdSnapshot(charId: string): Promise<Character> {
+    return new Promise((resolve) => {
+        onSnapshot(doc(firebaseService.database, 'characters', charId), (doc) => {
+            resolve(Character.fromDataOld(doc.data()));
+        });
+    });
 }

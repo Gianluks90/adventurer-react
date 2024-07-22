@@ -44,14 +44,16 @@ export default function Home() {
             </div>
 
             <div className="bottom-left-container">
-                <div className="as-glass-effect as-mini-btn" onClick={logout}>
+                <button className="as-glass-effect as-mini-btn" onClick={logout}>
                     <LogOut />
-                </div>
+                </button>
                 {user && user.role === ROLE.ADMIN ?
-                    <a className="as-glass-effect as-mini-btn" href="https://console.firebase.google.com/u/1/project/dnd-character-sheet-2023/overview" target="_blank">
-                        <FireFlame />
-                    </a> : ''
-                }
+                    <button className="as-glass-effect as-mini-btn">
+                        <a href="https://console.firebase.google.com/u/1/project/dnd-character-sheet-2023/overview" target="_blank">
+                            <FireFlame />
+                        </a>
+                    </button>
+                    : ''}
             </div>
 
             <div className="right-button">

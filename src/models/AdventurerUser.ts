@@ -4,7 +4,7 @@ export class AdventurerUser {
     progressive: number = 0;
     role: ROLE = ROLE.USER;
     characters: any[] = [];
-    // Da finire
+    // Da completare
 
     constructor() {}
 

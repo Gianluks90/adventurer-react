@@ -1,8 +1,16 @@
+import { AbilityScores } from "./abilityScores";
+import { Bonus, Feat } from "./Feat";
+import { Skill } from "./Skill";
+
 export class Character {
     id: string = '';
     info: Info = new Info();
+    appearance: Appearance = new Appearance();
     experience: Experience = new Experience();
+    abilityScores: AbilityScores = new AbilityScores();
+    skills: Skill[] = [];
     background: Background = new Background();
+    feats: Feat[] = [];
     status: Status = new Status();
 
     constructor() {}
@@ -23,6 +31,14 @@ export class Character {
         char.info.customSubspecies = info.sottorazzaPersonalizzata;
         char.info.alignment = info.allineamento;
 
+        const fisico = data.caratteristicheFisiche;
+        char.appearance.height = fisico.altezza;
+        char.appearance.weigth = fisico.peso;
+        char.appearance.age = fisico.eta;
+        char.appearance.eyes = fisico.occhi;
+        char.appearance.skin = fisico.carnagione;
+        char.appearance.hair = fisico.capelli;
+
         char.experience.level = info.livello;
         char.experience.list = info.classi.map((c: any) => {
             const charClass = new CharClass();
@@ -33,9 +49,42 @@ export class Character {
             charClass.customSubclassName = c.sottoclassePersonalizzata;
             return charClass;
         });
+
+        char.abilityScores.strength = data.caratteristiche.forza;
+        char.abilityScores.dexterity = data.caratteristiche.destrezza;
+        char.abilityScores.constitution = data.caratteristiche.costituzione;
+        char.abilityScores.intelligence = data.caratteristiche.intelligenza;
+        char.abilityScores.wisdom = data.caratteristiche.saggezza;
+        char.abilityScores.charisma = data.caratteristiche.carisma;
+
+        char.skills = Skill.newBasicSkills();
+        char.skills = this.fromSkillData(char.skills, data.competenzaAbilita);
+
         char.background.name = info.background;
         char.background.detail = info.dettaglioBackground;
         char.background.history = data.storiaPersonaggio;
+
+        const privilegiTratti = data.privilegiTratti;
+        char.feats = privilegiTratti.map((f: any) => {
+            const feat = new Feat();
+            feat.id = f.id || Feat.randomId();
+            feat.name = f.nome;
+            feat.description = f.descrizione;
+            feat.type = f.tipologia;
+            feat.tag = f.tag;
+            if (f.bonuses && f.bonuses.length > 0) {
+                feat.bonuses = f.bonuses.map((b: any) => {
+                    const bonus = new Bonus();
+                    bonus.value = b.value;
+                    bonus.element = b.element;
+                    return bonus;
+                });
+            } else {
+                f.bonuses = [];
+            }
+            feat.ref = f.riferimento;
+            return feat;
+        });
 
         const status = data.status;
         char.status.userId = status.userId;
@@ -46,6 +95,13 @@ export class Character {
         char.status.options.sheetTitleColor = status.sheetTitleColor;
         char.status.options.prideFlag = status.prideFlag;
         return char;
+    }
+
+    static fromSkillData(skills: Skill[], data: any): Skill[] {
+        skills.forEach((s: Skill) => {
+            
+        });
+        return [];
     }
 }
 
@@ -63,6 +119,17 @@ class Info {
     subspecies: string = '';
     customSubspecies: string = '';
     alignment: string = '';
+
+    constructor() {}
+}
+
+class Appearance {
+    height: string = '';
+    weigth: string = '';
+    age: string = '';
+    eyes: string = '';
+    skin: string = '';
+    hair: string = '';
 
     constructor() {}
 }

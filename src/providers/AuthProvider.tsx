@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { GoogleAuthProvider, signInWithPopup, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { checkUserExists } from "../services/userService";
+import { checkUserExistsSnapshot } from "../services/userService";
 import { AdventurerUser } from "../models/AdventurerUser";
 import firebaseService from "../services/firebaseService";
 
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const unsubscribe = firebaseService.auth.onAuthStateChanged((user: User) => {
       if (user) {
-        checkUserExists(user).then(advUser => {
+        checkUserExistsSnapshot(user).then(advUser => {
           if (advUser) {
             const adventuerUser = AdventurerUser.fromData(user.uid, advUser);
             setUser(adventuerUser);
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     signInWithPopup(firebaseService.auth, new GoogleAuthProvider())
       .then(result => {
-        checkUserExists(result.user).then(advUser => {
+        checkUserExistsSnapshot(result.user).then(advUser => {
           if (!advUser) {
             navigate("/login");
           } else {

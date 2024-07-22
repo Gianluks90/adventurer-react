@@ -163,6 +163,11 @@ button {
     cursor: not-allowed;
     opacity: 0.5;
   }
+
+  &>a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .as-standard-btn {
@@ -226,8 +231,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border-radius: 12px;
   color: white;
+  width: auto;
 }
 
 .as-mini-icon-btn {
@@ -247,6 +254,8 @@ button {
   background-color: white;
   color: #212121;
 }
+
+
 
 // DIALOG
 .as-dialog {
