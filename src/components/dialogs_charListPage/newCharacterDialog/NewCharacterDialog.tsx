@@ -41,7 +41,7 @@ const NewCharacterDialog: React.FC<NewCharacterDialogProps> = ({ onClose }) => {
                 <h2>Nuovo personaggio</h2>
             </div>
             <div className='as-dialog-content'>
-                <p>Inserisci il nome del Personaggio (massimo 20 caratteri). Se non ti bastano i caratteri potrai inserire un nome esteso per il tuo personaggio.</p>
+                <p>Inserisci il nome del Personaggio (massimo 20 caratteri). Se non ti bastano i caratteri potrai inserire, in seguito, un nome esteso per il tuo personaggio.</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='as-form-field'>
                         <input

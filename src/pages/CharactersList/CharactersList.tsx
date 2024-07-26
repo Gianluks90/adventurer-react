@@ -18,7 +18,7 @@ export default function CharactersList() {
         getCharactersByUserId(user.uid).then(result => {
             setCharacters(result);
             console.log(result);
-            
+
         })
     }, []);
 
@@ -40,17 +40,21 @@ export default function CharactersList() {
                     )}
                 </div>
             </div>
-            <div className="bottom-left-container">
-                <button className="as-glass-effect as-mini-btn left-button" onClick={() => navigate('/home')}>
-                    <Home />
-                </button>
+            <div className="as-bottom-btns-container">
+                <div className="left-btns">
+                    <button className="as-glass-effect as-mini-btn" onClick={() => navigate('/home')}>
+                        <Home />
+                    </button>
+                </div>
+                <div className="right-btns">
+                    <button className="as-glass-effect as-mini-btn" onClick={() => dialogRef.current?.showModal()}>
+                        <span>{user?.characters.length} / 3</span> <Plus />
+                    </button>
+                </div>
             </div>
 
-            <button className="as-glass-effect as-mini-btn right-button" onClick={() => dialogRef.current?.showModal()}>
-                <span>{user?.characters.length} / 3</span> <Plus />
-            </button>
             <dialog ref={dialogRef} className="as-dialog">
-                <NewCharacterDialog onClose={closeDialog}/>
+                <NewCharacterDialog onClose={closeDialog} />
             </dialog>
         </>
     )
