@@ -1,6 +1,10 @@
-import { AbilityScores } from "./abilityScores";
+import { Ability, AbilityEnum, AbilityLabel, AbilityScores } from "./abilityScores";
+import { Addons } from "./Addons";
+import { Contact } from "./Contact";
 import { Bonus, Feat } from "./Feat";
+import { Organization } from "./Organization";
 import { Skill } from "./Skill";
+import { Spell, SpellSlot } from "./Spell";
 
 export class Character {
     id: string = '';
@@ -9,13 +13,24 @@ export class Character {
     experience: Experience = new Experience();
     abilityScores: AbilityScores = new AbilityScores();
     skills: Skill[] = [];
+    proficiencies: Proficiencies = new Proficiencies();
     background: Background = new Background();
     feats: Feat[] = [];
+    baseParameters: BaseParameters = new BaseParameters();
+    magicParameters: MagicParameters = new MagicParameters();
+    equipment: Equipment = new Equipment(); // TODO
+    campaignInfo: CampaignInfo = new CampaignInfo();
+    contacts: Contact[] = []; // TODO
+    organizations: Organization[] = []; // TODO
+    addons: Addons[] = []; // TODO
+    calculatedParameters: CalculatedParameters = new CalculatedParameters(this.abilityScores);
     status: Status = new Status();
 
-    constructor() {}
+    constructor() { }
 
     public static fromDataOld(data: any): Character {
+        console.log(data);
+
         const char = new Character;
         char.id = data.id;
         const info = data.informazioniBase;
@@ -50,15 +65,23 @@ export class Character {
             return charClass;
         });
 
-        char.abilityScores.strength = data.caratteristiche.forza;
-        char.abilityScores.dexterity = data.caratteristiche.destrezza;
-        char.abilityScores.constitution = data.caratteristiche.costituzione;
-        char.abilityScores.intelligence = data.caratteristiche.intelligenza;
-        char.abilityScores.wisdom = data.caratteristiche.saggezza;
-        char.abilityScores.charisma = data.caratteristiche.carisma;
+        char.abilityScores.strength = new Ability(AbilityEnum.STRENGTH, AbilityLabel.STRENGTH, data.caratteristiche.forza, data.tiriSalvezza['forza']);
+        char.abilityScores.dexterity = new Ability(AbilityEnum.DEXTERITY, AbilityLabel.DEXTERITY, data.caratteristiche.destrezza, data.tiriSalvezza['destrezza']);
+        char.abilityScores.constitution = new Ability(AbilityEnum.CONSTITUTION, AbilityLabel.CONSTITUTION, data.caratteristiche.costituzione, data.tiriSalvezza['costituzione']);
+        char.abilityScores.intelligence = new Ability(AbilityEnum.INTELLIGENCE, AbilityLabel.INTELLIGENCE, data.caratteristiche.intelligenza, data.tiriSalvezza['intelligenza']);
+        char.abilityScores.wisdom = new Ability(AbilityEnum.WISDOM, AbilityLabel.WISDOM, data.caratteristiche.saggezza, data.tiriSalvezza['saggezza']);
+        char.abilityScores.charisma = new Ability(AbilityEnum.CHARISMA, AbilityLabel.CHARISMA, data.caratteristiche.carisma, data.tiriSalvezza['carisma']);
 
         char.skills = Skill.newBasicSkills();
-        char.skills = this.fromSkillData(char.skills, data.competenzaAbilita);
+        char.skills = this.fromOldSkillModel(char.skills, data);
+
+        const altreCompetenze = data.altreCompetenze;
+        char.proficiencies = {
+            armors: altreCompetenze.armature || [],
+            weapons: altreCompetenze.armi || [],
+            tools: altreCompetenze.strumenti || [],
+            languages: altreCompetenze.linguaggi || []
+        }
 
         char.background.name = info.background;
         char.background.detail = info.dettaglioBackground;
@@ -86,6 +109,42 @@ export class Character {
             return feat;
         });
 
+        char.baseParameters = {
+            speed: data.velocita,
+            proficiencyBonus: data.tiriSalvezza.bonusCompetenza
+        }
+
+        const magia = data.magia;
+        char.magicParameters = new MagicParameters();
+        char.magicParameters.spellClass = magia.classeIncantatore.toLowerCase();
+        char.magicParameters.spells = magia.trucchettiIncantesimi.map((s: any) => {
+            return Spell.fromOldData(s);
+        });
+        char.magicParameters.spellSlots = magia.slotIncantesimi.map((s: any) => {
+            const slot = new SpellSlot();
+            slot.label = s.levelLabel;
+            slot.max = s.max;
+            slot.used = s.used;
+            return slot;
+        });
+
+        const reverseAbilityLabel: { [key: string]: string } = {
+            'forza': 'strength',
+            'destrezza': 'dexterity',
+            'costituzione': 'constitution',
+            'intelligenza': 'intelligence',
+            'saggezza': 'wisdom',
+            'carisma': 'charisma'
+        };
+
+        char.magicParameters.spellcastingAbility = reverseAbilityLabel[magia.caratteristicaIncantatore.toLowerCase()];
+        char.magicParameters.spellSaveDC = 8 + this.calculateModifier(char.abilityScores[char.magicParameters.spellcastingAbility].score) + char.baseParameters.proficiencyBonus;
+        char.magicParameters.spellAttackBonus = this.calculateModifier(char.abilityScores[char.magicParameters.spellcastingAbility].score) + char.baseParameters.proficiencyBonus;
+        char.magicParameters.maxPreparableSpells = parseInt(magia.incantesimiPreparabili);
+        char.calculatedParameters = new CalculatedParameters(char.abilityScores);
+
+        char.campaignInfo.id = data.campaignId;
+
         const status = data.status;
         char.status.userId = status.userId;
         char.status.creationDate = status.creationDate;
@@ -97,11 +156,44 @@ export class Character {
         return char;
     }
 
-    static fromSkillData(skills: Skill[], data: any): Skill[] {
-        skills.forEach((s: Skill) => {
-            
+    static calculateModifier(score: number): number {
+        return Math.floor((score - 10) / 2);
+    }
+
+    static fromOldSkillModel(skills: Skill[], data: any): Skill[] {
+        const skillMapping: { [key: string]: string } = {
+            maestriaNatura: "nature",
+            indagare: "investigation",
+            addestrareAnimali: "animalHandling",
+            intuizione: "insight",
+            storia: "history",
+            religione: "religion",
+            sopravvivenza: "survival",
+            arcana: "arcana",
+            medicina: "medicine",
+            percezione: "perception",
+            furtivita: "stealth",
+            rapiditaDiMano: "sleightOfHand",
+            acrobazia: "acrobatics",
+            atletica: "athletics",
+            intimidire: "intimidation",
+            persuasione: "persuasion",
+            intrattenere: "performance",
+            inganno: "deception",
+        };
+
+        return skills.map(skill => {
+            const oldPropertyName = Object.keys(skillMapping).find(key => skillMapping[key] === skill.name);
+            if (oldPropertyName) {
+                return {
+                    ...skill,
+                    mastery: data[`maestria${skill.label}`] || false,
+                    proficent: data[oldPropertyName] || false
+                };
+            } else {
+                return skill;
+            }
         });
-        return [];
     }
 }
 
@@ -120,7 +212,7 @@ class Info {
     customSubspecies: string = '';
     alignment: string = '';
 
-    constructor() {}
+    constructor() { }
 }
 
 class Appearance {
@@ -131,13 +223,22 @@ class Appearance {
     skin: string = '';
     hair: string = '';
 
-    constructor() {}
+    constructor() { }
 }
 
 class Experience {
     level: number = 0;
     cumulatedExperience: number = 0;
     list: CharClass[] = [];
+}
+
+class Proficiencies {
+    armors: string[] = [];
+    weapons: string[] = [];
+    tools: string[] = [];
+    languages: string[] = [];
+
+    constructor() { }
 }
 
 class CharClass {
@@ -154,6 +255,50 @@ class Background {
     history: string = '';
 }
 
+class BaseParameters {
+    proficiencyBonus: number = 0;
+    speed: number = 0;
+}
+
+class MagicParameters {
+    spells: Spell[] = [];
+    spellSlots: SpellSlot[] = SpellSlot.newSpellSlots();
+    spellClass: string = '';
+    spellcastingAbility: string = '';
+    spellSaveDC: number = 0;
+    spellAttackBonus: number = 0;
+    preparableFormula: string = '';
+    maxPreparableSpells: number = 0;
+
+    constructor() { }
+
+    static calculatedMagicParameters(abilityScore: AbilityScores, spellcastingAbility: string) {
+        const spellSaveDC = 8 + CalculatedParameters.calculateModifier(abilityScore[spellcastingAbility].score);
+        const spellAttackBonus = CalculatedParameters.calculateModifier(abilityScore[spellcastingAbility].score);
+        return { spellSaveDC, spellAttackBonus };
+    }
+}
+
+class Equipment {}
+
+class CampaignInfo {
+    id: string = '';
+}
+
+class CalculatedParameters {
+    initiative: number = 0;
+    baseAC: number = 0;
+
+    constructor(abilityScore: AbilityScores) {
+        this.initiative = CalculatedParameters.calculateModifier(abilityScore.dexterity.score);
+        this.baseAC = 10 + CalculatedParameters.calculateModifier(abilityScore.dexterity.score);
+    }
+
+    static calculateModifier(score: number): number {
+        return Math.floor((score - 10) / 2);
+    }
+}
+
 class Status {
     userId: string = '';
     creationDate: Date | null = null;
@@ -161,11 +306,11 @@ class Status {
     statusCode: STATUSCODE = STATUSCODE.NEW;
     options: Option = new Option();
 
-    constructor() {}
+    constructor() { }
 }
 
 enum STATUSCODE {
-    NEW = 'new',	
+    NEW = 'new',
     DRAFT = 'draft',
     COMPLETE = 'complete'
 }
