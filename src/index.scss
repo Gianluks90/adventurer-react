@@ -192,6 +192,11 @@ button {
       background-color: var(--button-bg-color-hover);
     }
   }
+
+  &:disabled {
+    animation: none;
+    cursor: not-allowed;
+  }
 }
 
 .as-glass-effect {
@@ -204,6 +209,11 @@ button {
   &:hover {
     cursor: pointer;
     animation: fadeInBorder 0.5s forwards;
+  }
+
+  &:disabled {
+    animation: none;
+    cursor: not-allowed;
   }
 }
 

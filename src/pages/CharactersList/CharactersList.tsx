@@ -17,14 +17,8 @@ export default function CharactersList() {
         if (!user) return;
         getCharactersByUserId(user.uid).then(result => {
             setCharacters(result);
-            console.log(result);
-
         })
     }, []);
-
-    // useEffect(() => {
-    //     console.log(characters);
-    // }, [characters])
 
     const closeDialog = () => {
         dialogRef.current?.close();

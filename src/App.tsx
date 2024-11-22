@@ -8,6 +8,7 @@ import { useTheme } from './providers/ThemeProvider';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
 import CharactersList from './pages/CharactersList/CharactersList';
+import CharacterView from './pages/CharacterView/CharacterView';
 
 export default function App() {
   const [backgroundUrl, setBackgroundUrl] = useState<string>('/backgrounds/summer.jpg');
@@ -28,6 +29,11 @@ export default function App() {
               <Route path="/characters" element={
                 <ProtectedRoute>
                   <CharactersList />
+                </ProtectedRoute>
+              } />
+              <Route path='/character/:id' element={
+                <ProtectedRoute>
+                  <CharacterView />
                 </ProtectedRoute>
               } />
               <Route path="/" element={

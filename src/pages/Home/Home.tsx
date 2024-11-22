@@ -23,23 +23,23 @@ export default function Home() {
                     </button>
                     {/* </div> */}
                     {/* <div className="as-glass-effect"> */}
-                    <button className="as-glass-effect as-standard-btn home-btn">
+                    <button className="as-glass-effect as-standard-btn home-btn" disabled>
                         <Box /> Risorse
                     </button>
                     {/* </div> */}
                     {/* <div className=""> */}
-                    <button className="as-glass-effect as-standard-btn home-btn">
+                    <button className="as-glass-effect as-standard-btn home-btn" disabled>
                         <Group /> Campagne
                     </button>
                     {/* </div> */}
                     {/* <div className=""> */}
-                    <button className="as-glass-effect as-standard-btn home-btn">
+                    <button className="as-glass-effect as-standard-btn home-btn" disabled>
                         <Map /> Avventure
                     </button>
                     {/* </div> */}
                 </div>
                 <div className="version-label">
-                    Ver. 0.16072024
+                    Ver. 0.22112204
                 </div>
             </div>
 

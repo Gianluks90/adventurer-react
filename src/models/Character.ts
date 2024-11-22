@@ -137,11 +137,13 @@ export class Character {
             'carisma': 'charisma'
         };
 
-        char.magicParameters.spellcastingAbility = reverseAbilityLabel[magia.caratteristicaIncantatore.toLowerCase()];
-        char.magicParameters.spellSaveDC = 8 + this.calculateModifier(char.abilityScores[char.magicParameters.spellcastingAbility].score) + char.baseParameters.proficiencyBonus;
-        char.magicParameters.spellAttackBonus = this.calculateModifier(char.abilityScores[char.magicParameters.spellcastingAbility].score) + char.baseParameters.proficiencyBonus;
-        char.magicParameters.maxPreparableSpells = parseInt(magia.incantesimiPreparabili);
-        char.calculatedParameters = new CalculatedParameters(char.abilityScores);
+        if (reverseAbilityLabel[magia.caratteristicaIncantatore.toLowerCase()]) {
+            char.magicParameters.spellcastingAbility = reverseAbilityLabel[magia.caratteristicaIncantatore.toLowerCase()];
+            char.magicParameters.spellSaveDC = 8 + this.calculateModifier(char.abilityScores[char.magicParameters.spellcastingAbility].score) + char.baseParameters.proficiencyBonus;
+            char.magicParameters.spellAttackBonus = this.calculateModifier(char.abilityScores[char.magicParameters.spellcastingAbility].score) + char.baseParameters.proficiencyBonus;
+            char.magicParameters.maxPreparableSpells = parseInt(magia.incantesimiPreparabili);
+            char.calculatedParameters = new CalculatedParameters(char.abilityScores);
+        }
 
         char.campaignInfo.id = data.campaignId;
 
